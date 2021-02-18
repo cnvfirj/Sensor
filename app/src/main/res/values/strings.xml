@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Sensor</string>
+    <string name="text">Main Text</string>
+    <string name="coord_not_perm">нет разрешения</string>
+    <string name="coord_not_loc">включи геолокацию</string>
+    <string name="coord_search">coordinates search </string>
+
+
+</resources>

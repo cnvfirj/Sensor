@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="compass"
+            type="com.kittendevelop.sensor.ui.main.views.compass.CompassViewModel" />
+        <variable
+            name="gyroscope"
+            type="com.kittendevelop.sensor.ui.main.views.gyroscope.GyroscopeViewModel" />
+        <variable
+            name="coordinates"
+            type="com.kittendevelop.sensor.ui.main.views.coordinates.CoordinatesViewModel" />
+
+    </data>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_compass"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:compass="@{compass}"
+        android:layout_gravity="center"/>
+
+    <include layout="@layout/include_gyroscope"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:gyroscope="@{gyroscope}"
+        android:layout_gravity="center"/>
+
+    <include layout="@layout/include_coordinates"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:coordinates="@{coordinates}"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
+
+
+</layout>
