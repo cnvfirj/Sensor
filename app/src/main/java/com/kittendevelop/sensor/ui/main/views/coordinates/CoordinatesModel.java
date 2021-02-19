@@ -2,10 +2,14 @@ package com.kittendevelop.sensor.ui.main.views.coordinates;
 
 import com.kittendevelop.sensor.R;
 
-public class CoordinatesModel {
+import javax.inject.Inject;
+
+public class CoordinatesModel{
 
     private int mText;
 
+
+    @Inject
     public CoordinatesModel() {
         mText = R.string.coord_not_perm;
     }

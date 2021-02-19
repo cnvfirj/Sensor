@@ -6,12 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import javax.inject.Inject;
+
 public class GyroscopeViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final Application mApplication;
     private GyroscopeModel mModel;
 
 
+    @Inject
     public GyroscopeViewModelFactory(@NonNull Application application, GyroscopeModel mModel) {
         this.mApplication = application;
         this.mModel = mModel;

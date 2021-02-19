@@ -8,10 +8,14 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.kittendevelop.sensor.R;
 
+import javax.inject.Inject;
+
 
 public class GyroscopeViewModel extends AndroidViewModel {
 
    private GyroscopeModel mModel;
+
+
 
     public GyroscopeViewModel(@NonNull Application application, GyroscopeModel mModel) {
         super(application);

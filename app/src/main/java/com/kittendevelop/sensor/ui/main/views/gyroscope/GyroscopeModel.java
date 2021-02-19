@@ -2,10 +2,14 @@ package com.kittendevelop.sensor.ui.main.views.gyroscope;
 
 import com.kittendevelop.sensor.R;
 
-public class GyroscopeModel {
+import javax.inject.Inject;
+
+public class GyroscopeModel{
 
     private int mSrc;
 
+
+    @Inject
     public GyroscopeModel() {
         mSrc = R.drawable.ic_gyroscope;
     }

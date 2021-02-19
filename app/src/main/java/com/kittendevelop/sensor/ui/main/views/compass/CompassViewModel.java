@@ -8,9 +8,13 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.kittendevelop.sensor.R;
 
+import javax.inject.Inject;
+
 public class CompassViewModel extends AndroidViewModel {
 
     private CompassModel mModel;
+
+
 
     public CompassViewModel(@NonNull Application application, CompassModel mModel) {
         super(application);

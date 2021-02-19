@@ -5,9 +5,13 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import javax.inject.Inject;
+
 public class CoordinatesViewModel extends AndroidViewModel {
 
     private CoordinatesModel mModel;
+
+
 
     public CoordinatesViewModel(@NonNull Application application, CoordinatesModel mModel) {
         super(application);
