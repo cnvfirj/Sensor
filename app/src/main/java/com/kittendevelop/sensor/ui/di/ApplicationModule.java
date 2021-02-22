@@ -1,13 +1,17 @@
 package com.kittendevelop.sensor.ui.di;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.hardware.SensorManager;
 
 import androidx.core.content.PermissionChecker;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.kittendevelop.sensor.MainApplication;
+import com.kittendevelop.sensor.R;
 import com.kittendevelop.sensor.ui.main.MainFragment;
 import com.kittendevelop.sensor.ui.main.views.compass.CompassModel;
 import com.kittendevelop.sensor.ui.main.views.compass.CompassViewModel;
@@ -31,7 +35,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 
 @Module
-public class ApplicationModule implements CallbackDIModule{
+public class ApplicationModule{
 
     public final MainApplication mApplication;
 
@@ -67,29 +71,40 @@ public class ApplicationModule implements CallbackDIModule{
         return new ViewModelProvider(mFragment,coordinatesFactory()).get(CoordinatesViewModel.class);
     }
 
-    public CompassViewModelFactory compassFactory(){
-        return new CompassViewModelFactory(mApplication,new CompassModel());
+
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private CompassViewModelFactory compassFactory(){
+        return new CompassViewModelFactory(mApplication,new CompassModel(sensorManager()).drawable(drawable(R.drawable.ic_compass)));
     }
 
-    public GyroscopeViewModelFactory gyroscopeFactory(){
+    private GyroscopeViewModelFactory gyroscopeFactory(){
         return new GyroscopeViewModelFactory(mApplication,new GyroscopeModel());
     }
 
-    public CoordinatesViewModelFactory coordinatesFactory(){
+    private CoordinatesViewModelFactory coordinatesFactory(){
         return new CoordinatesViewModelFactory(mApplication,new CoordinatesModel());
     }
+
+    private SensorManager sensorManager(){
+        return (SensorManager)mApplication.getSystemService(Context.SENSOR_SERVICE);
+    }
+
+    private Resources resources() {
+        return mApplication.getResources();
+    }
+
+    private Drawable drawable(int id){
+        return resources().getDrawable(id);
+    }
+
+
+
 
     @Qualifier
     @Retention(RUNTIME)
     public @interface ForMainApplication{
 
     }
-
-    @Override
-    public Resources resources() {
-        return mApplication.getResources();
-    }
-
-
 
 }

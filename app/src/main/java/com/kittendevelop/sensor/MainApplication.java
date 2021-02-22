@@ -14,7 +14,6 @@ public class MainApplication extends Application {
 
     private ApplicationComponent mComponent;
     private MainFragment mFragment;
-//
     @Override
     public void onCreate() {
         super.onCreate();

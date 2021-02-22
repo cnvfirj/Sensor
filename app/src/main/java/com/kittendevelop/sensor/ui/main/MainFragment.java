@@ -47,19 +47,17 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ((MainApplication)getActivity().getApplication()).component().inject(this);
-
+        getLifecycle().addObserver(mCompassViewModel);
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         MainFragmentBinding b = MainFragmentBinding.bind(getView());
         b.setCompass(mCompassViewModel);
         b.setGyroscope(mGyroscopeViewModel);
         b.setCoordinates(mCoordinatesViewModel);
-
     }
 
 }

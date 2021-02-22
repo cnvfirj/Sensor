@@ -17,7 +17,7 @@ public class CompassViewModelFactory  extends ViewModelProvider.NewInstanceFacto
     private final CompassModel mModel;
 
 
-    @Inject
+//    @Inject
     public CompassViewModelFactory(Application mApplication, CompassModel mModel) {
         this.mApplication = mApplication;
         this.mModel = mModel;
