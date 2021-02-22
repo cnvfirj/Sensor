@@ -19,5 +19,4 @@ public interface ApplicationComponent {
     void inject(MainApplication application);
     void inject(MainFragment fragment);
 
-
 }

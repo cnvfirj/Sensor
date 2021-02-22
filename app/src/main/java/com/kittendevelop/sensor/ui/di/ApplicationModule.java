@@ -37,13 +37,9 @@ public class ApplicationModule implements CallbackDIModule{
 
     public MainFragment mFragment;
 
-    public ApplicationModule(MainApplication mApplication) {
-        this.mApplication = mApplication;
-    }
-
-    public ApplicationModule owner(MainFragment mFragment){
+    public ApplicationModule(MainApplication mApplication,MainFragment mFragment){
         this.mFragment = mFragment;
-        return this;
+        this.mApplication = mApplication;
     }
 
     @Provides
@@ -71,19 +67,15 @@ public class ApplicationModule implements CallbackDIModule{
         return new ViewModelProvider(mFragment,coordinatesFactory()).get(CoordinatesViewModel.class);
     }
 
-    @Provides
-    @Singleton
-    public ViewModelProvider.NewInstanceFactory compassFactory(){
+    public CompassViewModelFactory compassFactory(){
         return new CompassViewModelFactory(mApplication,new CompassModel());
     }
-    @Provides
-    @Singleton
-    public ViewModelProvider.NewInstanceFactory gyroscopeFactory(){
+
+    public GyroscopeViewModelFactory gyroscopeFactory(){
         return new GyroscopeViewModelFactory(mApplication,new GyroscopeModel());
     }
-    @Provides
-    @Singleton
-    public ViewModelProvider.NewInstanceFactory coordinatesFactory(){
+
+    public CoordinatesViewModelFactory coordinatesFactory(){
         return new CoordinatesViewModelFactory(mApplication,new CoordinatesModel());
     }
 
