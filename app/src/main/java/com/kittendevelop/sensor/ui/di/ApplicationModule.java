@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RotateDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.hardware.SensorManager;
 
 import androidx.core.content.PermissionChecker;
@@ -75,7 +77,7 @@ public class ApplicationModule{
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private CompassViewModelFactory compassFactory(){
-        return new CompassViewModelFactory(mApplication,new CompassModel(sensorManager()).drawable(drawable(R.drawable.ic_compass)));
+        return new CompassViewModelFactory(mApplication,new CompassModel(sensorManager()).drawable(drawable(R.drawable.compass)));
     }
 
     private GyroscopeViewModelFactory gyroscopeFactory(){
@@ -95,7 +97,7 @@ public class ApplicationModule{
     }
 
     private Drawable drawable(int id){
-        return resources().getDrawable(id);
+        return resources().getDrawable(id,null);
     }
 
 
