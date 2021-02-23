@@ -3,24 +3,23 @@ package com.kittendevelop.sensor.ui.main.views.compass;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.VectorDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class CompassModel implements SensorEventListener, LifecycleObserver {
 
-    private MutableLiveData<Drawable> mCompass;
+    private final MutableLiveData<Drawable> mCompass;
 
-    private SensorManager mSensorManager;
+    private final SensorManager mSensorManager;
 
-    private Sensor mAccelerometer;
-    private Sensor mMagnetometer;
+    private final Sensor mAccelerometer;
+    private final Sensor mMagnetometer;
+    private Drawable mDrawable;
 
     public CompassModel(SensorManager mSensorManager) {
         this.mSensorManager = mSensorManager;
@@ -30,9 +29,8 @@ public class CompassModel implements SensorEventListener, LifecycleObserver {
     }
 
     public CompassModel drawable(Drawable drawable){
-        drawable.mutate().getCurrent().setLevel(500);
+        mDrawable = drawable;
         mCompass.setValue(drawable);
-        rotate();
         return this;
     }
 
@@ -49,14 +47,27 @@ public class CompassModel implements SensorEventListener, LifecycleObserver {
         return mCompass;
     }
 
+    private float[] accel;
+    private float[] magnet;
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-          switch (sensorEvent.sensor.getType()){
-              case Sensor.TYPE_ACCELEROMETER:
-                  break;
-              case Sensor.TYPE_MAGNETIC_FIELD:
-                  break;
+          fillValues(sensorEvent);
+          if(accel!=null&&magnet!=null) {
+              float[] R = new float[9];
+              float[] I = new float[9];
+              boolean read = SensorManager.getRotationMatrix(R,I,accel,magnet);
+              if(read){
+                  float[]orient = new float[3];
+                  SensorManager.getOrientation(R,orient);
+                  float azimut = orient[0];
+                  float degres = (azimut*180f)/3.14f;
+                  int degres_int = Math.round(degres);
+                  mCompass.setValue(getRotateDrawable(mDrawable,degres_int));
+              }
           }
+
+
     }
 
     @Override
@@ -65,7 +76,19 @@ public class CompassModel implements SensorEventListener, LifecycleObserver {
     }
 
     private void rotate(){
+
         mCompass.setValue(getRotateDrawable(mCompass.getValue(),20));
+    }
+
+    private void fillValues(SensorEvent sensorEvent){
+        switch (sensorEvent.sensor.getType()){
+            case Sensor.TYPE_ACCELEROMETER:
+                accel = sensorEvent.values;
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                magnet = sensorEvent.values;
+                break;
+        }
     }
 
     private Drawable getRotateDrawable(final Drawable d, final float angle) {
