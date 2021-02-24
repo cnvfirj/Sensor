@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-public class CompassModel implements SensorEventListener, LifecycleObserver {
+public class CompassModel implements SensorEventListener{
 
     private final MutableLiveData<Drawable> mCompass;
 
@@ -75,10 +75,6 @@ public class CompassModel implements SensorEventListener, LifecycleObserver {
 
     }
 
-    private void rotate(){
-
-        mCompass.setValue(getRotateDrawable(mCompass.getValue(),20));
-    }
 
     private void fillValues(SensorEvent sensorEvent){
         switch (sensorEvent.sensor.getType()){

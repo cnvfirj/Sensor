@@ -81,13 +81,14 @@ public class ApplicationModule{
     }
 
     private GyroscopeViewModelFactory gyroscopeFactory(){
-        return new GyroscopeViewModelFactory(mApplication,new GyroscopeModel());
+        return new GyroscopeViewModelFactory(mApplication,new GyroscopeModel(sensorManager()).drawable((drawable(R.drawable.bubble))));
     }
 
     private CoordinatesViewModelFactory coordinatesFactory(){
         return new CoordinatesViewModelFactory(mApplication,new CoordinatesModel());
     }
 
+    @Singleton
     private SensorManager sensorManager(){
         return (SensorManager)mApplication.getSystemService(Context.SENSOR_SERVICE);
     }

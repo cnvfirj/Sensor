@@ -48,6 +48,7 @@ public class MainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ((MainApplication)getActivity().getApplication()).component().inject(this);
         getLifecycle().addObserver(mCompassViewModel);
+        getLifecycle().addObserver(mGyroscopeViewModel);
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
