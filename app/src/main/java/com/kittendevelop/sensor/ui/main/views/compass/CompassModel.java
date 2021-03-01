@@ -35,8 +35,9 @@ public class CompassModel implements SensorEventListener{
     }
 
     public void start(){
-       mSensorManager.registerListener(this,mAccelerometer,SensorManager.SENSOR_DELAY_UI);
-       mSensorManager.registerListener(this,mMagnetometer,SensorManager.SENSOR_DELAY_UI);
+
+       mSensorManager.registerListener(this,mAccelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+       mSensorManager.registerListener(this,mMagnetometer,SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void stop(){
@@ -47,26 +48,21 @@ public class CompassModel implements SensorEventListener{
         return mCompass;
     }
 
-    private float[] accel;
-    private float[] magnet;
+    private float[] floatGravity = new float[3];
+    private float[] floatGeoMagnetic = new float[3];
+
+    private float[] floatOrientation = new float[3];
+    private float[] floatRotationMatrix = new float[9];
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-          fillValues(sensorEvent);
-          if(accel!=null&&magnet!=null) {
-              float[] R = new float[9];
-              float[] I = new float[9];
-              boolean read = SensorManager.getRotationMatrix(R,I,accel,magnet);
-              if(read){
-                  float[]orient = new float[3];
-                  SensorManager.getOrientation(R,orient);
-                  float azimut = orient[0];
-                  float degres = (azimut*180f)/3.14f;
-                  int degres_int = Math.round(degres);
-                  mCompass.setValue(getRotateDrawable(mDrawable,degres_int));
-              }
-          }
-
+        fillValues(sensorEvent);
+        if(floatGravity!=null&&floatGeoMagnetic!=null) {
+            SensorManager.getRotationMatrix(floatRotationMatrix, null, floatGravity, floatGeoMagnetic);
+            SensorManager.getOrientation(floatRotationMatrix, floatOrientation);
+            float rotation = (float) (-floatOrientation[0]*180/3.14159);
+            mCompass.setValue(getRotateDrawable(mDrawable,rotation));
+        }
 
     }
 
@@ -79,10 +75,10 @@ public class CompassModel implements SensorEventListener{
     private void fillValues(SensorEvent sensorEvent){
         switch (sensorEvent.sensor.getType()){
             case Sensor.TYPE_ACCELEROMETER:
-                accel = sensorEvent.values;
+                floatGravity = sensorEvent.values;
                 break;
             case Sensor.TYPE_MAGNETIC_FIELD:
-                magnet = sensorEvent.values;
+                floatGeoMagnetic = sensorEvent.values;
                 break;
         }
     }
@@ -92,7 +88,6 @@ public class CompassModel implements SensorEventListener{
         return new LayerDrawable(arD) {
             @Override
             public void draw(final Canvas canvas) {
-
                 canvas.save();
                 canvas.rotate(angle, d.getBounds().width() / 2, d.getBounds().height() / 2);
                 super.draw(canvas);
