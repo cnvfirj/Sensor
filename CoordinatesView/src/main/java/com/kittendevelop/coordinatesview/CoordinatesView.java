@@ -15,6 +15,8 @@ public class CoordinatesView extends FrameLayout {
 
     private String mText;
 
+    private float[]mPoint;
+
     public CoordinatesView(@NonNull Context context) {
         super(context);
     }
