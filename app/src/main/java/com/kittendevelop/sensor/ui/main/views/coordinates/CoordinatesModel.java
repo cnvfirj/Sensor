@@ -9,7 +9,7 @@ public class CoordinatesModel{
     private int mText;
 
 
-    @Inject
+//    @Inject
     public CoordinatesModel() {
         mText = R.string.coord_not_perm;
     }

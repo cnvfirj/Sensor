@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.kittendevelop.sensor.ui.main.views.gyroscope.GyroscopeViewModel;
 
 import javax.inject.Inject;
 
@@ -16,7 +15,6 @@ public class CoordinatesViewModelFactory extends ViewModelProvider.NewInstanceFa
     private CoordinatesModel mModel;
 
 
-    @Inject
     public CoordinatesViewModelFactory(@NonNull Application mApplication, CoordinatesModel mModel) {
         this.mApplication = mApplication;
         this.mModel = mModel;

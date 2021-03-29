@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -7,11 +8,10 @@
             type="com.kittendevelop.sensor.ui.main.views.compass.CompassViewModel" />
     </data>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/compass"
-        android:src="@{compass.compass}"
-        android:scaleType="fitCenter">
-    </ImageView>
+    <com.kittendevelop.compassview.CompassView
+        android:id="@+id/compass_1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:isWork="@{compass.isWorking()}"
+        app:onListener="@{compass.listener()}"/>
 </layout>

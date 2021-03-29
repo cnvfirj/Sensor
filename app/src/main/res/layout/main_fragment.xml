@@ -8,41 +8,46 @@
             name="compass"
             type="com.kittendevelop.sensor.ui.main.views.compass.CompassViewModel" />
         <variable
-            name="gyroscope"
-            type="com.kittendevelop.sensor.ui.main.views.gyroscope.GyroscopeViewModel" />
+            name="stars"
+            type="com.kittendevelop.sensor.ui.main.views.stars.StarsViewModel" />
         <variable
             name="coordinates"
             type="com.kittendevelop.sensor.ui.main.views.coordinates.CoordinatesViewModel" />
 
     </data>
 
-<LinearLayout
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_compass"
+    <include layout="@layout/include_stars"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:compass="@{compass}"
+        app:stars="@{stars}"
         android:layout_gravity="center"/>
 
-    <include layout="@layout/include_gyroscope"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:gyroscope="@{gyroscope}"
-        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="end|top">
 
-    <include layout="@layout/include_coordinates"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:coordinates="@{coordinates}"
-        android:layout_gravity="center"/>
+        <include layout="@layout/include_compass"
+            app:compass="@{compass}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
 
-</LinearLayout>
+        <include layout="@layout/include_coordinates"
+            app:coordinates="@{coordinates}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</FrameLayout>
 
 
 </layout>

@@ -3,14 +3,13 @@
 
     <data>
         <variable
-            name="gyroscope"
-            type="com.kittendevelop.sensor.ui.main.views.gyroscope.GyroscopeViewModel" />
+            name="stars"
+            type="com.kittendevelop.sensor.ui.main.views.stars.StarsViewModel" />
     </data>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gyroscop"
-        android:src="@{gyroscope.bubble}">
+        android:background="@color/stars">
     </ImageView>
 </layout>

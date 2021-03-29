@@ -1,2 +1,4 @@
+include ':CoordinatesView'
+include ':CompassView'
 include ':app'
 rootProject.name = "Sensor"

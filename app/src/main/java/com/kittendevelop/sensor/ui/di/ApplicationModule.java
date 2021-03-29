@@ -21,9 +21,9 @@ import com.kittendevelop.sensor.ui.main.views.compass.CompassViewModelFactory;
 import com.kittendevelop.sensor.ui.main.views.coordinates.CoordinatesModel;
 import com.kittendevelop.sensor.ui.main.views.coordinates.CoordinatesViewModel;
 import com.kittendevelop.sensor.ui.main.views.coordinates.CoordinatesViewModelFactory;
-import com.kittendevelop.sensor.ui.main.views.gyroscope.GyroscopeModel;
-import com.kittendevelop.sensor.ui.main.views.gyroscope.GyroscopeViewModel;
-import com.kittendevelop.sensor.ui.main.views.gyroscope.GyroscopeViewModelFactory;
+import com.kittendevelop.sensor.ui.main.views.stars.StarsModel;
+import com.kittendevelop.sensor.ui.main.views.stars.StarsViewModel;
+import com.kittendevelop.sensor.ui.main.views.stars.StarsViewModelFactory;
 
 import java.lang.annotation.Retention;
 
@@ -61,11 +61,6 @@ public class ApplicationModule{
         return new ViewModelProvider(mFragment,compassFactory()).get(CompassViewModel.class);
     }
 
-    @Provides
-    @Singleton
-    public GyroscopeViewModel gyroscopeViewModel(){
-        return new ViewModelProvider(mFragment,gyroscopeFactory()).get(GyroscopeViewModel.class);
-    }
 
     @Provides
     @Singleton
@@ -73,35 +68,28 @@ public class ApplicationModule{
         return new ViewModelProvider(mFragment,coordinatesFactory()).get(CoordinatesViewModel.class);
     }
 
-
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private CompassViewModelFactory compassFactory(){
-        return new CompassViewModelFactory(mApplication,new CompassModel(sensorManager()).drawable(drawable(R.drawable.compass)));
+    @Provides
+    @Singleton
+    public StarsViewModel starsViewModel(){
+        return new ViewModelProvider(mFragment,starsFactory()).get(StarsViewModel.class);
     }
 
-    private GyroscopeViewModelFactory gyroscopeFactory(){
-        return new GyroscopeViewModelFactory(mApplication,new GyroscopeModel(sensorManager()).drawable((drawable(R.drawable.bubble))));
+    private CompassViewModelFactory compassFactory(){
+        return new CompassViewModelFactory(mApplication,new CompassModel());
     }
 
     private CoordinatesViewModelFactory coordinatesFactory(){
         return new CoordinatesViewModelFactory(mApplication,new CoordinatesModel());
     }
 
-    @Singleton
-    private SensorManager sensorManager(){
-        return (SensorManager)mApplication.getSystemService(Context.SENSOR_SERVICE);
+    private StarsViewModelFactory starsFactory(){
+        return new StarsViewModelFactory(mApplication, new StarsModel());
     }
 
-    private Resources resources() {
-        return mApplication.getResources();
-    }
-
-    private Drawable drawable(int id){
-        return resources().getDrawable(id,null);
-    }
-
-
+//    @Singleton
+//    private SensorManager sensorManager(){
+//        return (SensorManager)mApplication.getSystemService(Context.SENSOR_SERVICE);
+//    }
 
 
     @Qualifier

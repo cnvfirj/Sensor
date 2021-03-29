@@ -1,69 +1,64 @@
 package com.kittendevelop.sensor.ui.main.views.compass;
 
 import android.app.Application;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RotateDrawable;
-import android.graphics.drawable.VectorDrawable;
-import android.hardware.SensorManager;
+import android.media.MediaPlayer.OnCompletionListener;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.OnLifecycleEvent;
 
-import com.kittendevelop.sensor.MainApplication;
-import com.kittendevelop.sensor.R;
+import com.kittendevelop.compassview.CompassView;
+import com.kittendevelop.sensor.ui.main.views.stars.MainListener;
 
-import javax.inject.Inject;
+import static com.kittendevelop.sensor.Massages.MASSAGE;
 
 public class CompassViewModel extends AndroidViewModel implements LifecycleObserver{
 
-    private final CompassModel mModel;
+    private final ObservableField<Boolean>mWorking;
 
-    private LiveData<Drawable>mCompass;
+    private CompassView.OnCompassViewListener mCompassListener;
 
-    private ObservableField<Drawable>mDrawable;
-
+    private MainListener mMainListener;
 
     public CompassViewModel(@NonNull Application application, CompassModel mModel) {
         super(application);
-        mDrawable = new ObservableField<>();
-        this.mModel = mModel;
-        mCompass = this.mModel.getData();
-        mCompass.observe(((MainApplication)application).fragment(), new Observer<Drawable>() {
+        mWorking = new ObservableField<>();
+        mCompassListener = new CompassView.OnCompassViewListener() {
             @Override
-            public void onChanged(Drawable drawable) {
-               mDrawable.set(drawable);
+            public void degrees(float deg) {
+                if(mMainListener!=null)mMainListener.degrees(deg);
             }
-        });
+        };
     }
 
-
-
-    public ObservableField<Drawable>getCompass(){
-        return mDrawable;
+    public void setMainListener(MainListener listener){
+        mMainListener = listener;
     }
 
+    public ObservableField<Boolean>isWorking(){
+        return mWorking;
+    }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    public CompassView.OnCompassViewListener listener(){
+        return mCompassListener;
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void connect(){
-       mModel.start();
+       mWorking.set(true);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void disconnect(){
-        mModel.stop();
+        mWorking.set(false);
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
     }
-
-
 
 }
