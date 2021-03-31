@@ -25,7 +25,7 @@ public class StarsViewModel extends AndroidViewModel implements LifecycleObserve
     }
 
     @Override
-    public void point(PointF pt) {
+    public void point(double[] pt) {
 
     }
 }
