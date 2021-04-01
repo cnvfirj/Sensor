@@ -98,6 +98,6 @@ public class CoordinatesView extends FrameLayout {
     }
 
     public interface OnCoordinatesListener{
-        void point(double[] coordinates);
+        void point(double[] coordinates, boolean ready);
     }
 }
