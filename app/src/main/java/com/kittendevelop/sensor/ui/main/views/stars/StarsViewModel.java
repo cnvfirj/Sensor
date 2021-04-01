@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleObserver;
 
+import static com.kittendevelop.sensor.Massages.MASSAGE;
+
 public class StarsViewModel extends AndroidViewModel implements LifecycleObserver, MainListener {
 
     private StarsModel mModel;
@@ -21,7 +23,6 @@ public class StarsViewModel extends AndroidViewModel implements LifecycleObserve
 
     @Override
     public void degrees(float deg) {
-
     }
 
     @Override

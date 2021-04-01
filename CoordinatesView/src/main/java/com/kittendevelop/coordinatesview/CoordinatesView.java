@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.location.Location;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -24,8 +25,8 @@ import com.google.android.gms.tasks.Task;
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
 @BindingMethods({
-        @BindingMethod(type = CoordinatesView.class, attribute = "app:onListener", method = "setOnCoordinatesListener"),
-        @BindingMethod(type = CoordinatesView.class, attribute = "app:isWork", method = "work")
+        @BindingMethod(type = CoordinatesView.class, attribute = "onListener", method = "setOnCoordinatesListener"),
+        @BindingMethod(type = CoordinatesView.class, attribute = "isWork", method = "work")
 })
 public class CoordinatesView extends FrameLayout {
 
@@ -68,6 +69,7 @@ public class CoordinatesView extends FrameLayout {
     }
 
     public void work(boolean work){
+        Log.d("TAG", "work "+work);
         if(work)start();
         else stop();
     }

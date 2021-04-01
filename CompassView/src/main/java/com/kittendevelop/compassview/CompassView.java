@@ -24,8 +24,8 @@ import static android.content.Context.SENSOR_SERVICE;
 
 
 @BindingMethods({
-        @BindingMethod(type = CompassView.class, attribute = "app:onListener", method = "setOnCompassViewListener"),
-        @BindingMethod(type = CompassView.class, attribute = "app:isWork", method = "work")
+        @BindingMethod(type = CompassView.class, attribute = "onListener", method = "setOnCompassViewListener"),
+        @BindingMethod(type = CompassView.class, attribute = "isWork", method = "work")
 })
 public class CompassView extends FrameLayout implements SensorEventListener {
     private ImageView mImageView;
@@ -102,7 +102,8 @@ public class CompassView extends FrameLayout implements SensorEventListener {
         rotateAnimation.setDuration(210);
         rotateAnimation.setFillAfter(true);
         mImageView.startAnimation(rotateAnimation);
-        mCurrentDegree = -degree;
+        if(degree==0)mCurrentDegree=degree;
+        else mCurrentDegree = 360-degree;
 
         if(mListener!=null)mListener.degrees(mCurrentDegree);
     }
