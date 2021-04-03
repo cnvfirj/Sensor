@@ -4,5 +4,5 @@ import android.graphics.PointF;
 
 public interface MainListener {
     void degrees(float deg);
-    void point(double[] pt);
+    void point(double[] pt,boolean ready);
 }

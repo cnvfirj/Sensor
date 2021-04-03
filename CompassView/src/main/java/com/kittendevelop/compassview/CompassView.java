@@ -28,9 +28,12 @@ import static android.content.Context.SENSOR_SERVICE;
         @BindingMethod(type = CompassView.class, attribute = "isWork", method = "work")
 })
 public class CompassView extends FrameLayout implements SensorEventListener {
+
     private ImageView mImageView;
 
     private float mCurrentDegree = 0f;
+
+    private boolean mWork;
 
     private Drawable mImage;
 
@@ -65,7 +68,7 @@ public class CompassView extends FrameLayout implements SensorEventListener {
     private void init(Context context, AttributeSet attrs) {
         LayoutInflater.from(context).inflate(R.layout.compass_layout, this, true);
         mSensorManager = (SensorManager) getContext().getSystemService(SENSOR_SERVICE);
-
+        mWork = false;
         updateImage();
     }
 
@@ -79,11 +82,13 @@ public class CompassView extends FrameLayout implements SensorEventListener {
     }
 
     private void start(){
+        mWork = true;
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME);
     }
 
     private void stop(){
         mSensorManager.unregisterListener(this);
+        mWork = false;
     }
 
     public void work(boolean started){
@@ -97,15 +102,16 @@ public class CompassView extends FrameLayout implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float degree = (Math.round(event.values[0])+360)%360;
-        RotateAnimation rotateAnimation = new RotateAnimation(mCurrentDegree, -degree, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setDuration(210);
-        rotateAnimation.setFillAfter(true);
-        mImageView.startAnimation(rotateAnimation);
-        if(degree==0)mCurrentDegree=degree;
-        else mCurrentDegree = 360-degree;
-
-        if(mListener!=null)mListener.degrees(mCurrentDegree);
+        if(mWork) {
+            float degree = (Math.round(event.values[0]) + 360) % 360;
+            RotateAnimation rotateAnimation = new RotateAnimation(mCurrentDegree, -degree, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation.setDuration(210);
+            rotateAnimation.setFillAfter(true);
+            mImageView.startAnimation(rotateAnimation);
+            if (degree == 0) mCurrentDegree = degree;
+            else mCurrentDegree = 360 - degree;
+            if (mListener != null) mListener.degrees(mCurrentDegree);
+        }
     }
 
     @Override

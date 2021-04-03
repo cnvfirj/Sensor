@@ -29,9 +29,9 @@ public class CoordinatesViewModel extends AndroidViewModel implements LifecycleO
         mOnCoordinatesListener = new CoordinatesView.OnCoordinatesListener() {
             @Override
             public void point(double[] coordinates,boolean ready) {
-                if(ready) {
-                    if (mMainListener != null) mMainListener.point(coordinates);
-                }
+
+                    if (mMainListener != null) mMainListener.point(coordinates,ready);
+
             }
         };
         this.mModel = mModel;

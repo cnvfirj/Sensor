@@ -2,5 +2,4 @@
 <resources>
     <string name="search">Поиск</string>
     <string name="permission">Нет разрешения</string>
-    <string name="error">Местоположение не найдено</string>
 </resources>

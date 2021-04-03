@@ -46,12 +46,12 @@ public class CompassViewModel extends AndroidViewModel implements LifecycleObser
         return mCompassListener;
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void connect(){
        mWorking.set(true);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void disconnect(){
         mWorking.set(false);
     }
